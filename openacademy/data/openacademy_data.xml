@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: Set this file as demo data instead? -->
 <odoo>
     <data>
+        <!-- Sample contacts -->
+        <record id="openacademy_demo_partner_master_aemon" model="res.partner">
+            <field name="name">Maester Aemon</field>
+        </record>
+        <record id="openacademy_demo_partner_samwell_tarly" model="res.partner">
+            <field name="name">Samwell Tarly</field>
+        </record>
+        <record id="openacademy_demo_partner_arya_stark" model="res.partner">
+            <field name="name">Arya Stark</field>
+        </record>
+        <record id="openacademy_demo_partner_hodor" model="res.partner">
+            <field name="name">Hodor</field>
+        </record>
 
+        <!-- Sample course -->
+        <record id="openacademy_demo_course_maester" model="openacademy.course">
+            <field name="name">Head Maester Certification</field>
+            <field name="level">advanced</field>
+            <field name="description">Become the next Head Maester!</field>
+        </record>
+
+        <!-- Sample sessions -->
+        <record id="openacademy_demo_session_maester1" model="openacademy.session">
+            <field name="name">Head Maester - v14.0 session</field>
+            <field name="state">ended</field>
+            <field name="course_id" ref="openacademy_demo_course_maester"/>
+            <field name="teacher_id" ref="openacademy_demo_partner_master_aemon"/>
+            <field name="start_date" eval="(DateTime.today() - timedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(DateTime.today() - timedelta(days=16)).strftime('%Y-%m-%d')"/>
+            <field name="attendees_ids" eval="[(6, 0, [
+                ref('openacademy_demo_partner_arya_stark'),
+                ref('openacademy_demo_partner_hodor'),
+            ])]"/>
+        </record>
+        <record id="openacademy_demo_session_maester2" model="openacademy.session">
+            <field name="name">Head Maester - v14.1 session</field>
+            <field name="state">ongoing</field>
+            <field name="course_id" ref="openacademy_demo_course_maester"/>
+            <field name="teacher_id" ref="openacademy_demo_partner_master_aemon"/>
+            <field name="start_date" eval="(DateTime.today() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(DateTime.today() + timedelta(days=14)).strftime('%Y-%m-%d')"/>
+            <field name="attendees_ids" eval="[(6, 0, [
+                ref('openacademy_demo_partner_samwell_tarly'),
+                ref('openacademy_demo_partner_hodor'),
+            ])]"/>
+        </record>
+        <record id="openacademy_demo_session_maester3" model="openacademy.session">
+            <field name="name">Head Maester - v14.2 session</field>
+            <field name="state">draft</field>
+            <field name="course_id" ref="openacademy_demo_course_maester"/>
+            <field name="teacher_id" ref="openacademy_demo_partner_master_aemon"/>
+            <field name="start_date" eval="(DateTime.today() + timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(DateTime.today() + timedelta(days=44)).strftime('%Y-%m-%d')"/>
+            <field name="attendees_ids" eval="[(6, 0, [
+                ref('openacademy_demo_partner_arya_stark'),
+                ref('openacademy_demo_partner_hodor'),
+            ])]"/>
+        </record>
     </data>
 </odoo>
