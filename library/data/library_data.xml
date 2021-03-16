@@ -1,6 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- TODO: Set this file as demo data instead? -->
 <odoo>
     <data>
+        <!-- Demo authors & editors -->
+        <record id="library_demo_author_george_orwell" model="library.bookindustryperson">
+            <field name="name">George Orwell</field>
+        </record>
+        <record id="library_demo_editor_secker_warburg" model="library.bookindustryperson">
+            <field name="name">Secker &amp; Warburg</field>
+        </record>
+        <record id="library_demo_author_amie_kaufman" model="library.bookindustryperson">
+            <field name="name">Amie Kaufman</field>
+        </record>
+        <record id="library_demo_author_jay_kristoff" model="library.bookindustryperson">
+            <field name="name">Jay Kristoff</field>
+        </record>
 
+        <!-- Demo books-->
+        <record id="library_demo_book_1984" model="library.book">
+            <field name="title">1984</field>
+            <field name="authors_ids" eval="[(6, 0, [
+                ref('library_demo_author_george_orwell'),
+            ])]"/>
+            <field name="editors_ids" eval="[(6, 0, [
+                ref('library_demo_editor_secker_warburg'),
+            ])]"/>
+            <field name="isbn">9780141187761</field>
+            <field name="edition_date">2004-02-03</field>
+        </record>
+        <record id="library_demo_book_aurora_rising" model="library.book">
+            <field name="title">Aurora Rising</field>
+            <field name="authors_ids" eval="[(6, 0, [
+                ref('library_demo_author_amie_kaufman'),
+                ref('library_demo_author_jay_kristoff'),
+            ])]"/>
+            <field name="editors_ids" eval="[(6, 0, [
+                ref('library_demo_author_amie_kaufman'),
+            ])]"/>
+            <field name="isbn">9781524720964</field>
+            <field name="edition_date">2019-05-06</field>
+        </record>
+
+        <!-- Demo customers -->
+        <record id="library_demo_partner_john_doe" model="res.partner">
+            <field name="name">John Doe</field>
+        </record>
+        <record id="library_demo_partner_book_worm" model="res.partner">
+            <field name="name">Book Worm</field>
+        </record>
+        <record id="library_demo_partner_library_thief" model="res.partner">
+            <field name="name">Library Thief</field>
+        </record>
+
+        <!-- Demo rentals -->
+        <record id="library_demo_rental1" model="library.rental">
+            <field name="book_id" ref="library_demo_book_1984" />
+            <field name="customer_id" ref="library_demo_partner_john_doe" />
+            <field name="rent_date" eval="(DateTime.today() - timedelta(days=15)).strftime('%Y-%m-%d %H:%M:00')" />
+        </record>
+        <record id="library_demo_rental2" model="library.rental">
+            <field name="book_id" ref="library_demo_book_1984" />
+            <field name="customer_id" ref="library_demo_partner_book_worm" />
+            <field name="rent_date" eval="(DateTime.today() - timedelta(days=45)).strftime('%Y-%m-%d %H:%M:00')" />
+            <field name="return_date" eval="(DateTime.today() - timedelta(days=35)).strftime('%Y-%m-%d %H:%M:00')" />
+        </record>
+        <record id="library_demo_rental3" model="library.rental">
+            <field name="book_id" ref="library_demo_book_aurora_rising" />
+            <field name="customer_id" ref="library_demo_partner_book_worm" />
+            <field name="rent_date" eval="(DateTime.today() - timedelta(days=35)).strftime('%Y-%m-%d %H:%M:00')" />
+            <field name="return_date" eval="(DateTime.today() - timedelta(days=25)).strftime('%Y-%m-%d %H:%M:00')" />
+        </record>
+        <record id="library_demo_rental4" model="library.rental">
+            <field name="book_id" ref="library_demo_book_1984" />
+            <field name="customer_id" ref="library_demo_partner_library_thief" />
+            <field name="rent_date" eval="(DateTime.today() - timedelta(days=365)).strftime('%Y-%m-%d %H:%M:00')" />
+        </record>
     </data>
 </odoo>
