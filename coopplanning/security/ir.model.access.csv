@@ -1,1 +1,2 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+coopplanning_manager,Coop Planning Manager,model_coopplanning_task,,1,1,1,1

@@ -1,4 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <data>
+        <!-- Demo workers -->
+        <record id="coopplanning_demo_employee_henry_ford" model="hr.employee">
+            <field name="name">Henry Ford</field>
+        </record>
+        <record id="coopplanning_demo_employee_john_smith" model="hr.employee">
+            <field name="name">John Smith</field>
+        </record>
+        <record id="coopplanning_demo_employee_jane_doe" model="hr.employee">
+            <field name="name">Jane Doe</field>
+        </record>
+        <record id="coopplanning_demo_employee_shy_guy" model="hr.employee">
+            <field name="name">Shy Guy</field>
+        </record>
 
+        <!-- Demo tasks -->
+        <record id="coopplanning_demo_task_unload_goods" model="coopplanning.task">
+            <field name="name">Unloading Goods</field>
+            <field name="description">Unload vendors-received goods</field>
+            <field name="type">recurring</field>
+            <field name="active" eval="True" />
+            <field name="due_date" eval="(DateTime.today() + timedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="recurring_type">days</field>
+            <field name="recurring_interval">2</field>
+            <field name="time_demand">1</field>
+            <field name="workers_required">2</field>
+            <field name="assignees_ids" eval="[(6, 0, [
+                ref('coopplanning_demo_employee_henry_ford'),
+                ref('coopplanning_demo_employee_john_smith'),
+            ])]"/>
+        </record>
+        <record id="coopplanning_demo_task_count_cash" model="coopplanning.task">
+            <field name="name">Count Cash</field>
+            <field name="description">Count the cash in the register</field>
+            <field name="type">recurring</field>
+            <field name="active" eval="True" />
+            <field name="due_date" eval="DateTime.today().strftime('%Y-%m-%d')"/>
+            <field name="recurring_type">days</field>
+            <field name="recurring_interval">1</field>
+            <field name="time_demand">0.25</field>
+            <field name="workers_required">1</field>
+            <field name="assignees_ids" eval="[(6, 0, [
+                ref('coopplanning_demo_employee_shy_guy'),
+            ])]"/>
+        </record>
+        <record id="coopplanning_demo_task_clean_gutters" model="coopplanning.task">
+            <field name="name">Clean Gutters</field>
+            <field name="description">Clean the gutters from tree leaves</field>
+            <field name="type">oneshot</field>
+            <field name="active" eval="True" />
+            <field name="due_date" eval="(DateTime.today() + timedelta(days=4)).strftime('%Y-%m-%d')"/>
+            <field name="time_demand">3</field>
+            <field name="workers_required">1</field>
+            <field name="assignees_ids" eval="[(6, 0, [
+                ref('coopplanning_demo_employee_jane_doe'),
+            ])]"/>
+        </record>
+
+    </data>
 </odoo>
