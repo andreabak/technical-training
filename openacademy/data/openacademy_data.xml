@@ -19,6 +19,7 @@
         <field name="description">You will learn how to train your dragon</field>
         <field name="responsible_id" ref="partner_daenerys"/>
         <field name="level">easy</field>
+        <field name="max_attendees_default">10</field>
     </record>
 
     <record id="session_dragon1" model="openacademy.session">
