@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Views -->
+    <record id="view_course_tree" model="ir.ui.view">
+        <field name="name">openacademy.course.tree</field>
+        <field name="model">openacademy.course</field>
+        <field name="arch" type="xml">
+            <tree string="Courses">
+                <field name="name"/>
+                <field name="responsible_id" readonly="1"/>
+                <field name="level"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_session_tree" model="ir.ui.view">
+        <field name="name">openacademy.session.tree</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <tree string="Sessions">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="start_date" widget="date"/>
+                <field name="duration"/>
+                <field name="instructor_id"/>
+                <field name="course_id"/>
+                <field name="seats"/>
+                <field name="taken_seats" widget="progressbar"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_session_search" model="ir.ui.view">
+        <field name="name">openacademy.session.search</field>
+        <field name="model">openacademy.session</field>
+        <field name="arch" type="xml">
+            <search string="Search sessions">
+                <field name="name"/>
+                <field name="instructor_id"/>
+                <field name="course_id"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_course_tree" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">openacademy.course</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_course_tree"/>
+    </record>
+
+    <record id="action_session_tree" model="ir.actions.act_window">
+        <field name="name">Sessions</field>
+        <field name="res_model">openacademy.session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_session_tree"/>
+        <field name="search_view_id" ref="view_session_search"/>
+    </record>
+
+    <!-- Menu items -->
+    <menuitem id="openacademy_menu_root"
+              name="OpenAcademy"
+              active="True"
+              sequence="3"
+              web_icon="openacademy,static/description/icon.png"/>
+
+    <menuitem id="openacademy_courses"
+              parent="openacademy_menu_root"
+              action="action_course_tree"
+              sequence="1"/>
+    <menuitem id="openacademy_sessions"
+              parent="openacademy_menu_root"
+              action="action_session_tree"
+              sequence="2"/>
+
+</odoo>
