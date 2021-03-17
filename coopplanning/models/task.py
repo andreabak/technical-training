@@ -56,6 +56,11 @@ class TaskTemplate(models.Model):
     )
     active = fields.Boolean(default=True)
 
+    floating = fields.Boolean(
+        "Floating Task",
+        help="This task will be not assigned to someone and will be available for non recurring workers",
+    )
+
     @api.depends("start_time", "duration")
     def _compute_end_time(self):
         for record in self:
