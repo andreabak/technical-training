@@ -21,6 +21,7 @@
         "security/ir.model.access.csv",
         "data/coop_data.xml",
         "data/task_template.xml",
+        "views/coop_views.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],

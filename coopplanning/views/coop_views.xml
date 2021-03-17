@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Views -->
+    <record id="view_task_template_tree" model="ir.ui.view">
+        <field name="name">coopplanning.task.template.tree</field>
+        <field name="model">coopplanning.task.template</field>
+        <field name="arch" type="xml">
+            <tree string="Planning task templates" default_order="day_number,start_time asc">
+                <field name="name"/>
+                <field name="task_type_id"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="duration" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+                <field name="day_nb_id"/>
+                <field name="worker_nb"/>
+                <field name="worker_ids" widget="many2many_tags"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+    <record id="view_task_template_search" model="ir.ui.view">
+        <field name="name">coopplanning.task.template.search</field>
+        <field name="model">coopplanning.task.template</field>
+        <field name="arch" type="xml">
+            <search string="Search task templates">
+                <field name="name"/>
+                <field name="task_type_id"/>
+                <field name="task_type_area"/>
+                <field name="day_nb_id"/>
+                <field name="day_number"/>
+                <field name="worker_nb"/>
+                <separator/>
+                <filter string="Archived" name="no_active" domain="[('active', '=', False)]"/>
+                <filter string="All" name="all" domain="[('active', 'in', (True, False))]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_task_template_tree" model="ir.actions.act_window">
+        <field name="name">Planning</field>
+        <field name="res_model">coopplanning.task.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_task_template_tree"/>
+        <field name="search_view_id" ref="view_task_template_search"/>
+    </record>
+
+    <!-- Menu items -->
+    <menuitem id="coopplanning_menu_root"
+              name="CoopPlanning"
+              active="True"
+              sequence="4"/>
+
+    <menuitem id="coopplanning_courses"
+              parent="coopplanning_menu_root"
+              action="action_task_template_tree"
+              sequence="1"/>
+
+
+</odoo>
