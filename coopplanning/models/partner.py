@@ -7,3 +7,5 @@ class Partner(models.Model):
     _description = "Partner"
 
     name = fields.Char(required=True)
+
+    language = fields.Char()
