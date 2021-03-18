@@ -10,7 +10,7 @@ class Books(models.Model):
 
     author_ids = fields.Many2many("res.partner", string="Authors")
     edition_date = fields.Date()
-    isbn = fields.Char(string='ISBN', unique=True)
+    isbn = fields.Char(string='ISBN', unique=True)  # FIXME: What? unique is not a param
     publisher_id = fields.Many2one('res.partner', string='Publisher')
 
     copy_ids = fields.One2many('library.copy', 'book_id', string="Book Copies")
