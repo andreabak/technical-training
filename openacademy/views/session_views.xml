@@ -29,7 +29,7 @@
                             <field name="course_id"/>
                             <field name="responsible_id"/>
                             <field name="level"/>
-                            <field name="instructor_id"/>
+                            <field name="instructor_id" domain="[('is_instructor', '=', True)]"/>
                             <field name="active"/>
                         </group>
                         <group>

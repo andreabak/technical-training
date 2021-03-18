@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_openacademy" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.openacademy</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name='openacademy' string="Open Academy">
+                    <field name="attended_session_ids"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

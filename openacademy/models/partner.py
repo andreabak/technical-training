@@ -2,13 +2,10 @@
 from odoo import fields, models
 
 
-class Partner(models.Model):
-    _name = "openacademy.partner"
-    _description = "Partner"
+class ResPartner(models.Model):
+    _inherit = "res.partner"
 
-    name = fields.Char()
-
-    instructor = fields.Boolean(default=False)
-    session_ids = fields.Many2many(
-        "openacademy.session", string="Attended Sessions", readonly=True
+    is_instructor = fields.Boolean(default=False)
+    attended_session_ids = fields.Many2many(
+        "openacademy.session", string="Attended sessions", readonly=True
     )

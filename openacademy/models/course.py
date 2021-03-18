@@ -10,7 +10,7 @@ class Course(models.Model):
     description = fields.Text()
 
     responsible_id = fields.Many2one(
-        "openacademy.partner", ondelete="set null", string="Responsible"
+        "res.partner", ondelete="set null", string="Responsible"
     )
     session_ids = fields.One2many("openacademy.session", "course_id", string="Sessions")
 
@@ -46,14 +46,34 @@ class Session(models.Model):
     end_date = fields.Date(default=fields.Date.today)
     duration = fields.Float(digits=(6, 2), help="Duration in days", default=1)
 
-    instructor_id = fields.Many2one("openacademy.partner", string="Instructor")
+    instructor_id = fields.Many2one("res.partner", string="Instructor")
+    # instructor_is_instructor = fields.Boolean('instructor_id.is_instructor')
     course_id = fields.Many2one(
         "openacademy.course", ondelete="cascade", string="Course", required=True
     )
-    attendee_ids = fields.Many2many("openacademy.partner", string="Attendees")
+    attendee_ids = fields.Many2many("res.partner", string="Attendees")
     attendees_count = fields.Integer(compute="_get_attendees_count", store=True)
     seats = fields.Integer()
     taken_seats = fields.Float(compute="_compute_taken_seats", store=True)
+
+    @api.onchange("instructor_id")
+    def _check_is_instructor(self):
+        for record in self:
+            if not record.instructor_id.is_instructor:
+                return {
+                    "warning": {
+                        "title": "Invalid instructor",
+                        "message": "The selected partner is not an instructor",
+                    }
+                }
+
+    @api.constrains("instructor_id")
+    def _check_instructor(self):
+        for record in self:
+            if not record.instructor_id.is_instructor:
+                raise exceptions.ValidationError(
+                    "Selected partner is not an instructor"
+                )
 
     @api.depends("seats", "attendee_ids")
     def _compute_taken_seats(self):
