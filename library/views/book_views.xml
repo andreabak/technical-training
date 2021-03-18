@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <!-- Views -->
+    <record id="view_book_form" model="ir.ui.view">
+        <field name="name">library.book.form</field>
+        <field name="model">library.book</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="title">
+                        <field name="name"/>
+                        <field name="author_ids"/>
+                    </group>
+                    <group>
+                        <field name="edition_date"/>
+                        <field name="isbn"/>
+                        <field name="publisher_id"/>
+                    </group>
+                    <group name="copies">
+                        <field name="copy_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_book_copy_form" model="ir.ui.view">
+        <field name="name">library.copy.form</field>
+        <field name="model">library.copy</field>
+        <field name="inherit_id" ref="view_book_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='title']" position="before">
+                <group>
+                    <field name="book_id"/>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='copies']" position="replace">
+                <group col="1">
+                    <field name="reference"/>
+                    <field name="rental_ids"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Actions -->
     <record id="book_action" model="ir.actions.act_window">
         <field name="name">Books</field>
         <field name="res_model">library.book</field>
@@ -11,4 +57,5 @@
         <field name="res_model">library.copy</field>
         <field name="view_mode">tree,form</field>
     </record>
+
 </odoo>
