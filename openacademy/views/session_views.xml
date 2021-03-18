@@ -25,6 +25,9 @@
         <field name="model">openacademy.session</field>
         <field name="arch" type="xml">
             <form>
+               <header>
+                   <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+               </header>
                 <sheet>
                     <group>
                         <group>
@@ -41,11 +44,16 @@
                             <field name="duration"/>
                             <field name="seats"/>
                             <field name="taken_seats" widget="progressbar"/>
+                            <field name="autoconfirm_threshold"/>
                         </group>
                     </group>
                     <label for="attendee_ids"/>
                     <field name="attendee_ids"/>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
