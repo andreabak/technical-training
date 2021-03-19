@@ -9,7 +9,7 @@ class Rentals(models.Model):
     customer_id = fields.Many2one("res.partner", string="Customer")
     copy_id = fields.Many2one("library.copy", string="Book Copy")
     book_id = fields.Many2one(
-        "library.book", string="Book", related="copy_id.book_id", readonly=True
+        "product.product", string="Book", related="copy_id.book_id", readonly=True
     )
 
     rental_date = fields.Date(default=fields.Date.context_today)
