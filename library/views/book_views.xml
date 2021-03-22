@@ -9,6 +9,9 @@
                 <field name="edition_date"/>
                 <field name="author_ids"/>
                 <field name="publisher_id"/>
+                <field name="rent_price"/>
+                <field name="standard_price"/>
+                <field name="loss_fee"/>
             </tree>
         </field>
     </record>
@@ -25,12 +28,20 @@
                             <field name="name" placeholder="Name"/>
                         </h1>
                     </div>
-                    <group>
-                        <field name="name"/>
-                        <field name="author_ids" context="{'default_author': True}" widget="many2many_tags"/>
-                        <field name="publisher_id"/>
-                        <field name="edition_date"/>
-                        <field name="isbn"/>
+                    <group col="2">
+                        <group>
+                            <field name="name"/>
+                            <field name="author_ids" context="{'default_author': True}" widget="many2many_tags"/>
+                            <field name="publisher_id"/>
+                            <field name="edition_date"/>
+                            <field name="isbn"/>
+                        </group>
+                        <group col="2">
+                            <field name="standard_price"/>
+                            <field name="rent_price"/>
+                            <field name="loss_fee_pct" widget="percentage"/>
+                            <field name="loss_fee"/>
+                        </group>
                     </group>
                     <notebook>
                         <page string="Book Copies" name="copies">
@@ -60,7 +71,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="reference"/>
-                <field name="book_state"/>
+                <field name="state" widget="badge"/>
             </tree>
         </field>
     </record>
@@ -71,6 +82,11 @@
         <field name="mode">primary</field>
         <field name="inherit_id" ref="library.book_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <field name="state" widget="statusbar" readonly="1"/>
+                </header>
+            </xpath>
             <field name="name" position="replace">
                 <field name="book_id"/>
             </field>

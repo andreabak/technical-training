@@ -21,9 +21,12 @@
         "security/ir.model.access.csv",
         "views/book_views.xml",
         "views/partner_views.xml",
+        "views/payment_views.xml",
         "views/rental_views.xml",
         "views/menu_views.xml",
         "data/library_data.xml",
+        "data/cron.xml",
+        "data/mail.xml",
     ],
     # only loaded in demonstration mode
     "demo": [],

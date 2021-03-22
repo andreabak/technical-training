@@ -9,6 +9,8 @@
                 <field name="customer_id"/>
                 <field name="rental_date"/>
                 <field name="return_date"/>
+                <field name="state" widget="badge"/>
+                <field name="bill_amount"/>
             </tree>
         </field>
     </record>
@@ -18,12 +20,30 @@
         <field name="model">library.rental</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <!-- TODO: pre-populate rental field and amount for new payment form -->
+                    <button name="mark_rented" string="Mark Rented" states="draft"
+                            class="btn-primary" type="object"/>
+                    <button name="mark_returned" string="Mark Returned" states="rented"
+                            class="btn-primary" type="object"/>
+                    <button name="mark_lost" string="Mark Lost" states="rented" type="object"/>
+                    <button name="library.payment_action" string="Register Payment"
+                        type="action" states="returned,lost" class="btn-primary"/>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
                 <sheet>
                     <group>
                         <field name="customer_id"/>
                         <field name="copy_id"/>
                         <field name="rental_date"/>
-                        <field name="return_date"/>
+                        <field name="return_date"
+                               attrs="{
+                                   'invisible': [('rental_date', '=', False)],
+                                   'readonly': [('state', '=', 'lost')]
+                               }"/>
+                        <field name="rent_price"/>
+                        <field name="loss_fee"/>
+                        <field name="bill_amount"/>
                     </group>
                 </sheet>
             </form>

@@ -60,6 +60,14 @@
     />
 
     <menuitem
+            id="payment_menu_action"
+            name="Payments"
+            parent="library.rental_menu"
+            sequence="20"
+            action="library.payment_action"
+    />
+
+    <menuitem
             id="settings_menu"
             name="Settings"
             parent="library.menu_root"
