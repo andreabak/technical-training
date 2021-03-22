@@ -74,7 +74,6 @@
     <record id="partner_action" model="ir.actions.act_window">
         <field name="name">Contacts</field>
         <field name="res_model">res.partner</field>
-        <field name="domain">[('customer','=',True)]</field>
         <field name="view_mode">tree,form</field>
     </record>
 
