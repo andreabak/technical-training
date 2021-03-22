@@ -17,6 +17,7 @@
     "depends": ["base", "mail"],
     # always loaded
     "data": [
+        "security/security.xml",
         "security/ir.model.access.csv",
         "views/course_views.xml",
         "views/session_views.xml",

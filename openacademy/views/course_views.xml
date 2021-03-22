@@ -39,7 +39,8 @@
                         </h1>
                     </div>
                     <group>
-                        <field name="responsible_id"/>
+                        <field name="can_edit_responsible" invisible="1"/>
+                        <field name="responsible_id" attrs="{'readonly': [('can_edit_responsible', '=', False)]}"/>
                         <field name="level"/>
                     </group>
                     <notebook>

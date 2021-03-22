@@ -1,3 +1,11 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-course_manager,Course Manager,model_openacademy_course,,1,1,1,1
-session_manager,Session Manager,model_openacademy_session,,1,1,1,1
+access_course_archmaester,access.course.archmaester,model_openacademy_course,openacademy.group_archmaester,1,1,1,1
+access_course_maester,access.course.maester,model_openacademy_course,openacademy.group_maester,1,1,0,0
+access_course_public,access.course.public,model_openacademy_course,base.group_public,1,0,0,0
+access_session_archmaester,access.session.archmaester,model_openacademy_session,openacademy.group_archmaester,1,1,1,1
+access_session_maester,access.session.maester,model_openacademy_session,openacademy.group_maester,1,1,1,0
+access_session_apprentice,access.session.apprentice,model_openacademy_session,openacademy.group_apprentice,1,1,0,0
+access_session_public,access.session.public,model_openacademy_session,base.group_public,1,0,0,0
+access_add_attendee_wizard_archmaester,access.add_attendee.wizard.archmaester,model_add_attendee_wizard,openacademy.group_archmaester,1,1,1,1
+access_add_attendee_wizard_maester,access.add_attendee.wizard.maester,model_add_attendee_wizard,openacademy.group_maester,1,1,1,0
+access_add_attendee_wizard_apprentice,access.add_attendee.wizard.apprentice,model_add_attendee_wizard,openacademy.group_apprentice,1,1,0,0

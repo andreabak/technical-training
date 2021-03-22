@@ -14,6 +14,8 @@ class Course(models.Model):
     responsible_id = fields.Many2one(
         "res.users", ondelete="set null", string="Responsible"
     )
+    can_edit_responsible = fields.Boolean(compute="_compute_can_edit_responsible")
+
     session_ids = fields.One2many("openacademy.session", "course_id", string="Sessions")
 
     level = fields.Selection(
@@ -31,6 +33,12 @@ class Course(models.Model):
         ),
         ("name_unique", "UNIQUE(name)", "The course title must be unique"),
     ]
+
+    @api.depends("responsible_id")
+    def _compute_can_edit_responsible(self):
+        self.can_edit_responsible = self.env.user.has_group(
+            "openacademy.group_archmaesters"
+        )
 
     def copy(self, default=None):
         default = dict(default or {})
