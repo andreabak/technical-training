@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="registration_wizard_form_view" model="ir.ui.view">
+            <field name="name">openacademy.wizard.registration.form</field>
+            <field name="model">openacademy.wizard.registration</field>
+            <field name="arch" type="xml">
+                <form string="Add Attendees">
+                    <group>
+                        <field name="session_id"/>
+                        <field name="attendee_ids"/>
+                    </group>
+                    <footer>
+                        <button name="register" type="object"
+                                string="Register" class="oe_highlight"/>
+                        <button special="cancel" string="Cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="session_registration_wizard" model="ir.actions.act_window">
+            <field name="name">Register Attendees</field>
+            <field name="res_model">openacademy.wizard.registration</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{
+                'default_session_id': active_id,
+            }</field>
+            <field name="binding_model_id" ref="model_openacademy_session"/>
+        </record>
+
+        <record id="attendees_registration_wizard" model="ir.actions.act_window">
+            <field name="name">Register to Session</field>
+            <field name="res_model">openacademy.wizard.registration</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{
+                'default_attendee_ids': active_ids,
+            }</field>
+            <field name="binding_model_id" ref="model_res_partner"/>
+        </record>
+
+    </data>
+</odoo>

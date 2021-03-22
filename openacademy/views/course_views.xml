@@ -18,6 +18,15 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_attendees" type="object"
+                                class="oe_stat_button" icon="fa-user"
+                                attrs="{'invisible': [('attendees_count', '=', 0)]}">
+                            <div class="o_stat_info">
+                                <field name="attendees_count" widget="statinfo" string="Attendees"/>
+                            </div>
+                        </button>
+                    </div>
                     <group>
                         <field name="name"/>
                         <field name="responsible_id"/>

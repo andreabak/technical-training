@@ -22,6 +22,11 @@ class Course(models.Model):
     )
     session_count = fields.Integer(compute="_compute_session_count")
 
+    attendees_ids = fields.Many2many(
+        "res.partner", compute="_get_attendees", store=True
+    )
+    attendees_count = fields.Integer(compute="_get_attendees_count")
+
     _sql_constraints = [
         (
             "name_description_check",
@@ -49,6 +54,29 @@ class Course(models.Model):
     def _compute_session_count(self):
         for course in self:
             course.session_count = len(course.session_ids)
+
+    @api.depends("session_ids")
+    def _get_attendees(self):
+        for record in self:
+            record.attendees_ids = record.env["res.partner"].search(
+                [("session_ids", "in", record.session_ids.ids)]
+            )
+
+    @api.depends("attendees_ids")
+    def _get_attendees_count(self):
+        for record in self:
+            record.attendees_count = len(record.attendees_ids)
+
+    def action_view_attendees(self):
+        attendees = self.mapped("attendees_ids")
+        if attendees:
+            action = self.env["ir.actions.actions"]._for_xml_id(
+                "openacademy.partner_action"
+            )
+            action["domain"] = [("id", "in", attendees.ids)]
+        else:
+            action = {"type": "ir.actions.act_window_close"}
+        return action
 
 
 class Session(models.Model):

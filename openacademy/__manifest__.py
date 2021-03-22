@@ -21,6 +21,7 @@
         "views/course_views.xml",
         "views/session_views.xml",
         "views/partner_views.xml",
+        "views/wizard_views.xml",
         "views/menu_views.xml",
         "data/openacademy_data.xml",
     ],
