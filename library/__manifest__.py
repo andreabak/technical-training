@@ -15,7 +15,7 @@
     "category": "Training",
     "version": "0.1",
     # any module necessary for this one to work correctly
-    "depends": ["base", "product"],
+    "depends": ["base", "product", "portal"],
     # always loaded
     "data": [
         "security/ir.model.access.csv",
@@ -26,6 +26,7 @@
         "views/payment.xml",
         "views/price.xml",
         "views/rental.xml",
+        "views/library_portal_templates.xml",
         "data/cron.xml",
         "data/mail.xml",
         "data/library_data.xml",

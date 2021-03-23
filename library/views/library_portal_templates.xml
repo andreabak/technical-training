@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <template id="portal_my_home_book_rentals" name="Show Rented Books" inherit_id="portal.portal_my_home"
+              customize_show="True" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Rented Books</t>
+                <t t-set="url" t-value="'/my/books'"/>
+                <t t-set="placeholder_count" t-value="'book_rentals'"/>
+            </t>
+        </xpath>
+    </template>
+
+    <template id="portal_my_books" name="My Rented Books">
+      <t t-call="portal.portal_layout">
+        <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+        <t t-call="portal.portal_searchbar">
+            <t t-set="title">Rented Books</t>
+        </t>
+      </t>
+    </template>
+
+    <template id="portal_my_books" name="My Quotations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Rented Books</t>
+            </t>
+            <t t-if="not rentals">
+                <p>There are currently no rented books for your account.</p>
+            </t>
+            <t t-if="rentals" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Rental Ref</th>
+                        <th>Book</th>
+                        <th class="text-right">Rental Date</th>
+                        <th class="text-right">Return Date</th>
+                        <th class="text-center"/>
+                    </tr>
+                </thead>
+                <t t-foreach="rentals" t-as="rental">
+                    <tr>
+                        <td><t t-esc="rental.id"/></td>
+                        <td><span t-field="rental.book_id.name"/></td>
+                        <td class="text-right"><span t-field="rental.rental_date"/></td>
+                        <td class="text-right"><span t-field="rental.return_date"/></td>
+                        <td class="text-center">
+                            <span t-if="rental.state == 'rented'" class="badge badge-pill badge-primary"><i class="fa fa-fw fa-book"/> Rented</span>
+                            <span t-if="rental.state == 'returned'" class="badge badge-pill badge-secondary"><i class="fa fa-fw fa-check"/> Returned</span>
+                            <span t-if="rental.state == 'lost'" class="badge badge-pill badge-danger"><i class="fa fa-fw fa-remove"/> Lost</span>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
