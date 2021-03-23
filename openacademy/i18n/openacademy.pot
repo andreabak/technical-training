@@ -461,4 +461,3 @@ msgstr ""
 #: model:ir.ui.view,arch_db:openacademy.wizard_form_view
 msgid "or"
 msgstr ""
-
