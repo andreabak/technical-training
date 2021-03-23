@@ -113,6 +113,9 @@ class Session(models.Model):
     taken_seats = fields.Float(compute="_compute_taken_seats", store=True)
     percentage_per_day = fields.Integer("%", default=100)
 
+    invoice_id = fields.Many2one("account.move", string="Invoice")
+    is_paid = fields.Boolean(compute="_compute_is_paid")
+
     def _warning(self, title, message):
         return {
             "warning": {
@@ -199,6 +202,61 @@ class Session(models.Model):
                     rec.name, rec.course_id.name
                 )
             )
+
+    @api.depends("invoice_id")
+    def _compute_is_paid(self):
+        for rec in self:
+            rec.is_paid = bool(rec.invoice_id)
+
+    def _prepare_invoice(self):
+        self.ensure_one()
+        move_type = self._context.get("default_move_type", "in_invoice")
+        invoice_vals = {
+            "move_type": move_type,
+            "invoice_user_id": self.env.user.id,
+            "partner_id": self.instructor_id.id,
+            "invoice_line_ids": [],
+            "company_id": self.env.company.id,
+            "currency_id": self.env.company.currency_id.id,
+        }
+        return invoice_vals
+
+    def _create_invoice(self):
+        self.ensure_one()
+        invoice = self.env["account.move"].search(
+            [("partner_id", "=", self.instructor_id.id)]
+        )
+        if not invoice:
+            invoice_vals = self._prepare_invoice()
+            invoice = (
+                self.env["account.move"]
+                .with_context(default_move_type="in_invoice")
+                .create(invoice_vals)
+            )
+        account_type = self.env.ref("account.data_account_type_expenses")
+        expense_account = self.env["account.account"].search(
+            [("user_type_id", "=", account_type.id)], limit=1
+        )
+        invoice_line_vals = {
+            "move_id": invoice.id,
+            "currency_id": invoice.currency_id.id,
+            "date": fields.Date.context_today(self),
+            "name": self.name,
+            "account_id": expense_account.id,
+            # 'product_id': self.product_id.id,  # TODO: Add product for the course
+            # 'product_uom_id': self.product_uom.id,
+            # "quantity": self.qty_to_invoice,
+            # "price_unit": self.price_unit,
+        }
+        invoice_line = self.env["account.move.line"].create(invoice_line_vals)
+        invoice.write({"invoice_line_ids": [(4, invoice_line.id)]})
+        self.write({"invoice_id": invoice.id})
+
+    def create_invoice(self):
+        for rec in self:
+            if rec.is_paid:
+                continue  # TODO: Warn invoice exists
+            rec._create_invoice()
 
     def _auto_transition(self):
         for rec in self:

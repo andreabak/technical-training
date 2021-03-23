@@ -14,7 +14,7 @@
     "category": "OpenAcademy",
     "version": "0.8",
     # any module necessary for this one to work correctly
-    "depends": ["base", "mail"],
+    "depends": ["base", "mail", "account", "purchase"],
     # always loaded
     "data": [
         "security/security.xml",
