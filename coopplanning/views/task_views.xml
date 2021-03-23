@@ -118,6 +118,21 @@
         </field>
     </record>
 
+    <record id="task_type_view_search" model="ir.ui.view">
+        <field name="name">view.task.type.search</field>
+        <field name="model">coopplanning.task.type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="label"/>
+                <field name="description"/>
+                <field name="area"/>
+                <filter name="inactive" string="Inactive" domain="[('active', '=', False)]"/>
+                <filter name="all" string="All" domain="['|', ('active', '=', False), ('active', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
     <record id="task_action" model="ir.actions.act_window">
         <field name="name">Tasks</field>
         <field name="res_model">coopplanning.task</field>
@@ -128,6 +143,7 @@
         <field name="name">Task Types</field>
         <field name="res_model">coopplanning.task.type</field>
         <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="task_type_view_search"/>
     </record>
 
     <record id="task_template_action" model="ir.actions.act_window">

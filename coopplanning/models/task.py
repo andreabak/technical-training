@@ -22,12 +22,19 @@ def floatime_to_hour_minute(f):
 class TaskType(models.Model):
     _name = "coopplanning.task.type"
     _description = "Task Type"
+    _rec_name = "label"
 
     name = fields.Char()
     description = fields.Text()
+    label = fields.Char(compute="_compute_label", store=True)
 
     area = fields.Char()
     active = fields.Boolean(default=True)
+
+    @api.depends("name", "description")
+    def _compute_label(self):
+        for record in self:
+            record.label = f"{record.name}: {record.description}"
 
 
 class TaskTemplate(models.Model):
