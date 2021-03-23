@@ -53,14 +53,13 @@ class TaskTemplate(models.Model):
         for rec in self:
             rec.duration = rec.end_time - rec.start_time
 
-    @api.multi
     def generate_task(self):
         self.ensure_one()
         task = self.env['coopplanning.task']
         today = datetime.today()
         h_begin, m_begin = floatime_to_hour_minute(self.start_time)
         h_end, m_end = floatime_to_hour_minute(self.end_time)
-        for i in xrange(0, self.worker_nb):
+        for i in range(0, self.worker_nb):
             task.create({
                 'name':             "%s (%s) - (%s) [%s]" % (self.name, float_to_time(self.start_time), float_to_time(self.end_time), i),
                 'task_template_id': self.id,

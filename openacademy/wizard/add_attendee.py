@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from odoo import api, exceptions, fields, models
 
 
@@ -21,7 +20,6 @@ class AddAttendees(models.TransientModel):
         res = super(AddAttendees, self).create(vals)
         return res
 
-    @api.multi
     def subscribe(self):
         for session in self.session_id:
             session.attendee_ids |= self.attendee_ids
