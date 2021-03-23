@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form>
                     <sheet>
-                        <field name="image" widget='image' class="oe_left oe_avatar"/>
+                        <field name="image_1920" widget='image' class="oe_avatar" options='{"preview_image": "image_128"}'/>
                         <div class="oe_title oe_left">
                             <h1>
                                 <field name="name" placeholder="Name"/>
@@ -134,13 +134,16 @@
         </record>
 
         <!-- actions -->
-        <act_window id="launch_add_books_wizard"
-                    name="Add books"
-                    src_model="library.copy"
-                    res_model="library.wizard"
-                    view_mode="form"
-                    target="new"
-                    key2="client_action_multi"/>
+        <record id="launch_add_books_wizard" model="ir.actions.act_window">
+            <field name="name">Add books</field>
+            <field name="res_model">library.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{
+                'default_copy_ids': active_ids,
+            }</field>
+            <field name="binding_model_id" ref="model_library_copy"/>
+        </record>
 
         <record model="ir.ui.view" id="wizard_form_view">
             <field name="name">wizard.form</field>

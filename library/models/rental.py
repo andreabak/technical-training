@@ -7,21 +7,19 @@ class Rentals(models.Model):
     _description = 'Book rental'
     _order = "rental_date desc,return_date desc"
 
-    customer_id = fields.Many2one('res.partner', string='Customer', domain=[('customer', '=', True)], required=True)
+    customer_id = fields.Many2one('res.partner', string='Customer', required=True)
     copy_id = fields.Many2one('library.copy', string="Book Copy", domain=[('book_state', '=', 'available')], required=True)
     book_id = fields.Many2one('product.product', string='Book', domain=[('book', '=', True)], related='copy_id.book_id', readonly=True)
     rental_date = fields.Date(default=fields.Date.context_today, required=True)
     return_date = fields.Date(required=True)
     state = fields.Selection([('draft', 'Draft'), ('rented', 'Rented'), ('returned', 'Returned'), ('lost', 'Lost')], default="draft")
 
-    @api.multi
     def action_confirm(self):
         for rec in self:
             rec.state = 'rented'
             rec.copy_id.book_state = 'rented'
             rec.add_fee('time')
 
-    @api.multi
     def add_fee(self, type):
         for rec in self:
             if type == 'time':
@@ -40,13 +38,11 @@ class Rentals(models.Model):
                 'amount':      - amount,
             })
 
-    @api.multi
     def action_return(self):
         for rec in self:
             rec.state = 'returned'
             rec.copy_id.book_state = 'available'
 
-    @api.multi
     def action_lost(self):
         for rec in self:
             rec.state = 'lost'
