@@ -1,1 +1,7 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_kingdom_city_king,access.kingdom.city.king,model_kingdom_city,kingdom.group_king,1,1,1,1
+access_kingdom_city_economist,access.kingdom.city.economist,model_kingdom_city,kingdom.group_economist,1,1,0,0
+access_kingdom_city_citizen,access.kingdom.city.citizen,model_kingdom_city,kingdom.group_economist,1,0,0,0
+access_kingdom_army_king,access.kingdom.army.king,model_kingdom_army,kingdom.group_king,1,1,1,1
+access_kingdom_army_commander,access.kingdom.army.commander,model_kingdom_army,kingdom.group_commander,1,1,0,0
+access_kingdom_army_soldier,access.kingdom.army.soldier,model_kingdom_army,kingdom.group_commander,1,0,0,0

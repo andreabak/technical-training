@@ -7,7 +7,11 @@ class City(models.Model):
     _description = "Stats for each major city"
 
     name = fields.Char(required=True)
-    citizen_count = fields.Integer(string="Number of citizen")
+    citizen_count = fields.Integer(
+        string="Number of citizen", groups="kingdom.group_economist"
+    )
     production_food = fields.Float(
-        string="Food production", help="Number of tons of production"
+        string="Food production",
+        help="Number of tons of production",
+        groups="kingdom.group_economist",
     )

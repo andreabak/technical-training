@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="module_category_kingdom" model="ir.module.category">
+            <field name="name">Kingdom</field>
+        </record>
+
+        <!-- Groups -->
+
+        <record id="group_citizen" model="res.groups">
+            <field name="name">Citizen</field>
+            <field name="category_id" ref="kingdom.module_category_kingdom"/>
+        </record>
+
+        <record id="group_soldier" model="res.groups">
+            <field name="name">Soldier</field>
+            <field name="category_id" ref="kingdom.module_category_kingdom"/>
+            <field name="implied_ids" eval="[(6,0,[ref('group_citizen')])]"/>
+        </record>
+
+        <record id="group_commander" model="res.groups">
+            <field name="name">Commander</field>
+            <field name="category_id" ref="kingdom.module_category_kingdom"/>
+            <field name="implied_ids" eval="[(6,0,[ref('group_soldier')])]"/>
+        </record>
+
+        <record id="group_economist" model="res.groups">
+            <field name="name">Economist</field>
+            <field name="category_id" ref="kingdom.module_category_kingdom"/>
+            <field name="implied_ids" eval="[(6,0,[ref('group_citizen')])]"/>
+        </record>
+
+        <record id="group_king" model="res.groups">
+            <field name="name">King</field>
+            <field name="category_id" ref="kingdom.module_category_kingdom"/>
+            <field name="implied_ids" eval="[(6,0,[ref('group_commander'), ref('group_economist')])]"/>
+        </record>
+
+        <!-- Default groups assignments -->
+
+        <record model="res.users" id="base.user_root">
+            <field eval="[(4,ref('kingdom.group_king'))]" name="groups_id"/>
+        </record>
+
+        <record model="res.users" id="base.user_admin">  <!-- Admin better be the king -->
+            <field eval="[(4,ref('kingdom.group_king'))]" name="groups_id"/>
+        </record>
+
+    </data>
+
+    <data noupdate="1">
+
+    </data>
+</odoo>
+
+<!--
+Access roles:
+- King:
+    - has full access to everything
+- Commander:
+    - has full access to Army
+    - cannot change commander
+- Soldier:
+    - can see stuff about Army readonly
+    - cannot see soldiers counts
+- Economist:
+    - has full access to City
+- Citizen:
+    - has access to users readonly
+    - can see only City name
+- No public access to anything, must be user (or just don't consider)
+
+Rules:
+- No one can know heir:
+    - Only king has access to heir field in company
+
+-->
