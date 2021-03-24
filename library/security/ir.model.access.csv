@@ -3,3 +3,4 @@ rental_manager,Rental Manager,model_library_rental,,1,1,1,1
 payment_manager,Payment Manager,model_library_payment,,1,1,1,1
 copy_manager,Copy Manager,model_library_copy,,1,1,1,1
 price_manager,Price Manager,model_library_price,,1,1,1,1
+rent_wizard_manager,Rent Wizard Manager,model_library_rent_books_wizard,,1,1,1,1

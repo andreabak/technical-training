@@ -26,6 +26,7 @@
         "views/payment_views.xml",
         "views/price_views.xml",
         "views/menu_views.xml",
+        "views/wizard_views.xml",
         "data/cron.xml",
         "data/mail.xml",
         "data/library_data.xml",

@@ -4,7 +4,7 @@
         <field name="name">library.rental.tree</field>
         <field name="model">library.rental</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree default_order="rental_date desc">
                 <field name="copy_id"/>
                 <field name="customer_id"/>
                 <field name="rental_date"/>
