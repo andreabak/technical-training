@@ -6,4 +6,6 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     task_count = fields.Integer("N° task", compute="_number_task")
-    task_ids = fields.One2many("coopplanning.task", "worker_id", string="Tasks")
+    task_ids = fields.One2many(
+        "coopplanning.task", "worker_id", string="Tasks", store=True
+    )

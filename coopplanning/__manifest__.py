@@ -22,6 +22,7 @@
         "views/task_views.xml",
         "views/daynumber_views.xml",
         "views/menu_views.xml",
+        "report/task_report.xml",
         "data/coop_data.xml",
         "data/task_template.xml",
     ],

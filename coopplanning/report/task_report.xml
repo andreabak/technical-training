@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="action_report_tasks" model="ir.actions.report">
+            <field name="name">Tasks Report</field>
+            <field name="model">coopplanning.task</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">coopplanning.report_tasks</field>
+            <field name="report_file">coopplanning.report_tasks</field>
+            <field name="binding_model_id" ref="model_coopplanning_task"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="tasks_table">
+            <table>
+                <thead>
+                    <tr>
+                        <th><span>#</span></th>
+                        <th><span>Name</span></th>
+                        <th><span>Type</span></th>
+                        <th><span>Start time</span></th>
+                        <th><span>End time</span></th>
+                        <th><span>Worker</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="tasks" t-as="task">
+                        <tr>
+                            <td><span t-field="task.id"/></td>
+                            <td><span t-field="task.name"/></td>
+                            <td><span t-field="task.task_type_id"/></td>
+                            <td><span t-field="task.start_time"/></td>
+                            <td><span t-field="task.end_time"/></td>
+                            <td><span t-field="task.worker_id.name"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </template>
+
+        <template id="report_tasks">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Tasks:</h2>
+                        <t t-set="tasks" t-value="docs"/>
+                        <t t-call="coopplanning.tasks_table"/>
+                    </div>
+                </t>
+                <p style="page-break-after: always;"/>
+                <t t-if="workers">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Tasks by workers:</h2>
+                            <t t-foreach="workers" t-as="worker">
+                                <h3 t-field="worker.name"/>
+                                <t t-set="tasks" t-value="worker.task_ids"/>
+                                <t t-call="coopplanning.tasks_table"/>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

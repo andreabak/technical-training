@@ -3,7 +3,6 @@ import math
 from datetime import datetime
 
 from odoo import api, fields, models
-from pytz import UTC
 
 
 def float_to_time(f):
