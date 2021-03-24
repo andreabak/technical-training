@@ -24,6 +24,7 @@
         "views/partner_views.xml",
         "views/menu_views.xml",
         "wizard/add_attendee_views.xml",
+        "report/session.xml",
         "data/openacademy_data.xml",
     ],
     # only loaded in demonstration mode
